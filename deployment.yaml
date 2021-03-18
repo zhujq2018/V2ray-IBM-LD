@@ -1,29 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wechat-pdb
-  namespace: zhujq2018
+  name: ub-proxy
+  namespace: zhujq
 spec:
   selector:
     matchLabels:
-      app: wechat-pdb
+      app: ub-proxy
   replicas: 1
   template:
     metadata:
       labels:
-        app: wechat-pdb
+        app: ub-proxy
     spec:
       containers:
-        - name: wechat-pdb
-          image: zhujq/wechat
+        - name: ub-proxy
+          image: zhujq/web-proxy
+          imagePullPolicy: "Always"
           ports:
-            - containerPort: 80
-              protocol: TCP
-          resources:
-            limits:
-              cpu: 100m
-              memory: 128Mi
-            requests:
-              cpu: 10m
-              memory: 64Mi
+            - containerPort: 8080
 
