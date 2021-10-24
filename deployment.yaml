@@ -10,7 +10,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 5Gi
 ---
 
 apiVersion: apps/v1
@@ -42,57 +42,3 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-pv-claim
             
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ub-pv-claim
-  labels:
-    app: ub-pv-claim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 2Gi
----
-
-
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ub-novnc
-  namespace: zhujq
-spec:
-  selector:
-    matchLabels:
-      app: ub-novnc
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: ub-novnc
-    spec:
-      containers:
-        - name: ub-novnc
-          image: zhujq/ub-novnc
-          ports:
-            - containerPort: 6901
-          env:
-           - name: VNC_RESOLUTION
-             value: 1920x1080
-          resources:
-            limits:
-              cpu: 1000m
-              memory: 3Gi
-            requests:
-              cpu: 1000m
-              memory: 1Gi
-          volumeMounts:
-            - name: ub-persistent-storage
-              mountPath: /root/my
-      volumes:
-        - name: ub-persistent-storage
-          persistentVolumeClaim:
-            claimName: ub-pv-claim
-
