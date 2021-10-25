@@ -1,4 +1,4 @@
-name: okteto-deploy-wechat-pdb
+name: okteto-deploy-ubproxy
 
 on:
   workflow_dispatch:
